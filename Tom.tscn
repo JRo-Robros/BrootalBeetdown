@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://GraphicalAssets/tom.png" type="Texture" id=1]
+[ext_resource path="res://GraphicalAssets/idle.png" type="Texture" id=1]
 [ext_resource path="res://Tom.gd" type="Script" id=2]
 [ext_resource path="res://GraphicalAssets/vine.png" type="Texture" id=3]
 [ext_resource path="res://GraphicalAssets/crosshair.png" type="Texture" id=4]
@@ -12,17 +12,47 @@ radius = 45.0
 radius = 32.0
 height = 10.0
 
+[sub_resource type="Animation" id=3]
+resource_name = "Default"
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, -11.6519, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
 [node name="Tom" type="KinematicBody2D"]
 collision_mask = 20
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
 
 [node name="Vine" type="Node2D" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="Vine"]
 margin_left = -24.0
 margin_top = -18.0
-margin_right = 34.0
-margin_bottom = 7.0
+margin_right = 83.0
+margin_bottom = 14.0
 rect_clip_content = true
 texture = ExtResource( 3 )
 stretch_mode = 2
@@ -30,16 +60,10 @@ stretch_mode = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-offset = Vector2( -45, -40 )
-texture = ExtResource( 1 )
-polygon = PoolVector2Array( 92.4242, 76.3636, 91.2121, 0.30303, 0, 0.30303, 0.30303, 73.0303 )
-uv = PoolVector2Array( 91.2121, 70.9091, 91.2121, 0.30303, 0, 0.30303, 0.909091, 70 )
-
 [node name="Crosshair" type="Node2D" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="Crosshair"]
-margin_left = 77.0
+margin_left = 100.0
 margin_top = -12.0
 margin_right = 101.0
 margin_bottom = 12.0
@@ -54,5 +78,34 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="BulletTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Default = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[node name="Visual" type="Node2D" parent="."]
+scale = Vector2( -1, 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Visual"]
+position = Vector2( -47, -51 )
+texture = ExtResource( 1 )
+skeleton = NodePath("Skeleton2D")
+polygon = PoolVector2Array( -10.0313, -1.88088, 47.6489, -2.19436, 108.464, -1.88088, 109.274, 26.0827, 109.718, 41.3793, 108.777, 80.2508, 108.464, 105.643, 51.0972, 107.524, -9.40439, 107.21, -10.0313, 79.9373, -8.77743, 28.5266 )
+uv = PoolVector2Array( -10.0313, -1.88088, 47.6489, -2.19436, 108.464, -1.88088, 109.274, 26.0827, 109.718, 41.3793, 108.777, 80.2508, 108.464, 105.643, 51.0972, 107.524, -9.40439, 107.21, -10.0313, 79.9373, -8.77743, 28.5266 )
+polygons = [ PoolIntArray( 9, 0, 1, 2, 3 ), PoolIntArray( 9, 8, 4, 3 ), PoolIntArray( 8, 7, 6, 5, 4 ) ]
+bones = [ "Bone2D", PoolRealArray( 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 ), "Bone2D2", PoolRealArray( 1, 1, 0, 0, 0, 0, 0, 0.5, 0, 1, 1 ) ]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Visual/Polygon2D"]
+
+[node name="Bone2D" type="Bone2D" parent="Visual/Polygon2D/Skeleton2D"]
+position = Vector2( 55, 52 )
+rest = Transform2D( 0.996912, -0.0785329, 0.0785329, 0.996912, 55, 52 )
+default_length = 50.0
+
+[node name="Bone2D2" type="Bone2D" parent="Visual/Polygon2D/Skeleton2D"]
+position = Vector2( 39, 57 )
+rotation = 3.14016
+rest = Transform2D( -0.999999, 0.00142923, -0.00142923, -0.999999, 39, 57 )
+default_length = 50.0
 
 [connection signal="timeout" from="BulletTimer" to="." method="_on_BulletTimer_timeout"]
