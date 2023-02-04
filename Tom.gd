@@ -27,6 +27,7 @@ onready var crosshair = $Crosshair
 
 func _ready():
 	Globals.player = self
+	$AnimationPlayer.play('Default')
 	return
 
 
@@ -40,20 +41,21 @@ func _input(event):
 
 
 func _process(delta):
-	crosshair.look_at(get_global_mouse_position())
+	var mouse_loc = get_global_mouse_position()
+	crosshair.look_at(mouse_loc)
+	$Visual.scale.x = -1 if mouse_loc.x < position.x else 1
+		
 	match state:
 		STATE.UNROOTED, STATE.ROOTED:
 			if Input.is_mouse_button_pressed(BUTTON_LEFT):
-				shoot(get_global_mouse_position() - position)
-			vine.visible = false
+				shoot(mouse_loc - position)
 			crosshair.visible = true
-			vine.look_at(get_global_mouse_position())
+			vine.look_at(mouse_loc)
 			if vine_target != Vector2.INF:
 				state = STATE.VINE_IN_MOTION
 			continue
 			
 		STATE.VINE_IN_MOTION, STATE.TOM_IN_MOTION:
-			vine.visible = true
 			crosshair.visible = false
 			if vine_target != Vector2.INF:
 				vine.look_at(vine_target)
@@ -85,7 +87,7 @@ func _process(delta):
 					state = STATE.ROOTED
 					
 		STATE.ROOTED:
-			vine.look_at(get_global_mouse_position())
+			vine.look_at(mouse_loc)
 			if vine_target != Vector2.INF:
 				vine_text.rect_size.x = 10
 				state = STATE.VINE_IN_MOTION
