@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Title.gd" type="Script" id=1]
+[ext_resource path="res://Music/Title/Title Music.mp3" type="AudioStream" id=2]
 
 [node name="Title" type="Node2D"]
 script = ExtResource( 1 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -8.0
+autoplay = true
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_right = 1.0
