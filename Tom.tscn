@@ -13,7 +13,7 @@ radius = 32.0
 height = 10.0
 
 [node name="Tom" type="KinematicBody2D"]
-collision_mask = 22
+collision_mask = 20
 script = ExtResource( 2 )
 
 [node name="Vine" type="Node2D" parent="."]
@@ -46,9 +46,8 @@ margin_bottom = 12.0
 texture = ExtResource( 4 )
 
 [node name="HitBox" type="Area2D" parent="."]
-collision_layer = 0
 collision_mask = 16
-monitorable = false
+monitoring = false
 
 [node name="HB_Collision_Shape" type="CollisionShape2D" parent="HitBox"]
 rotation = 1.5708
@@ -56,5 +55,4 @@ shape = SubResource( 2 )
 
 [node name="BulletTimer" type="Timer" parent="."]
 
-[connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]
 [connection signal="timeout" from="BulletTimer" to="." method="_on_BulletTimer_timeout"]
