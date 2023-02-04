@@ -13,7 +13,7 @@ radius = 32.0
 height = 10.0
 
 [node name="Tom" type="KinematicBody2D"]
-collision_mask = 6
+collision_mask = 22
 script = ExtResource( 2 )
 
 [node name="Vine" type="Node2D" parent="."]
@@ -29,8 +29,6 @@ stretch_mode = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionShape2D"]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 offset = Vector2( -45, -40 )
