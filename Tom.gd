@@ -21,6 +21,7 @@ onready var crosshair = $Crosshair
 
 
 func _ready():
+	Globals.player = self
 	return
 
 
@@ -102,4 +103,5 @@ func _on_BulletTimer_timeout():
 
 
 func take_damage(damage):
-	print(damage)
+	health -= damage
+	Globals.emit_signal("player_health_changed")
