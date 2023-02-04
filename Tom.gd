@@ -10,6 +10,7 @@ export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.
 export var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
 export var vine_sound = preload("res://Sound Effects/Player/vine.mp3")
 export var lock_sound = preload("res://Sound Effects/Player/Player lock sound.mp3")
+export var gun_particles = preload("res://VFX/Gun Particles.tscn")
 
 var in_cooldown = false
 var state = STATE.UNROOTED
@@ -103,6 +104,7 @@ func shoot(direction):
 	b.position = position
 	get_parent().add_child_below_node(self, b)
 	play_shoot_sound()
+	gun_particles()
 	in_cooldown = true
 	$BulletTimer.start(cooldown)
 	return
@@ -118,6 +120,15 @@ func take_damage(damage):
 	health -= damage
 	play_hurt_sound()
 	Globals.emit_signal("player_health_changed")
+
+
+func gun_particles():
+	var particles = gun_particles.instance()
+	particles.global_position = position + Vector2(90, 0).rotated(get_angle_to((get_global_mouse_position())))
+	particles.rotation = crosshair.rotation
+	particles.z_index = z_index + 1
+	particles.emitting = true
+	get_tree().current_scene.add_child(particles)
 
 
 #sound functions
