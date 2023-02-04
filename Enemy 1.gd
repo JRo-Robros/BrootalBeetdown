@@ -7,13 +7,16 @@ var state = STATE.SEEKING
 export var max_speed = 300
 export var acceleration = 2000
 export var deceleration = 2000
-export var damage = 1
+export var damage = 5
 
 export var hurt_sound = preload("res://Sound Effects/Enemy/Enemy hit sound.mp3")
 
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
 
+
+func _ready():
+	$AnimationPlayer.play('default')
 
 func _physics_process(delta):
 	set_direction()

@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Block.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Tom.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GraphicalAssets/dirt.png" type="Texture" id=3]
-[ext_resource path="res://shooter.gd" type="Script" id=4]
 [ext_resource path="res://Enemy 1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PlayerHealth.gd" type="Script" id=6]
 [ext_resource path="res://Music/Level/Level Theme.mp3" type="AudioStream" id=7]
@@ -18,10 +16,11 @@ autoplay = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
 
-[node name="PlayerHealth" type="Label" parent="CanvasLayer"]
+[node name="PlayerHealth" type="ColorRect" parent="CanvasLayer"]
+modulate = Color( 0.0392157, 0.819608, 0.360784, 1 )
 margin_left = 18.0
 margin_top = 14.0
-margin_right = 58.0
+margin_right = 200.0
 margin_bottom = 28.0
 script = ExtResource( 6 )
 
@@ -31,52 +30,43 @@ margin_right = 1280.0
 margin_bottom = 720.0
 texture = ExtResource( 3 )
 
-[node name="Block" parent="." instance=ExtResource( 1 )]
-position = Vector2( 816, 262 )
+[node name="YSort" type="YSort" parent="."]
 
-[node name="Tom" parent="." instance=ExtResource( 2 )]
+[node name="Tom" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 396, 408 )
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 640, 618 )
-script = ExtResource( 4 )
-
-[node name="Timer" type="Timer" parent="Node2D"]
-
-[node name="Enemy 1" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 1" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( -136, 595 )
 
-[node name="Enemy 2" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 2" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( -298, 367 )
 
-[node name="Enemy 3" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 3" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( -282, 53 )
 
-[node name="Enemy 4" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 4" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 170, -193 )
 
-[node name="Enemy 5" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 5" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 772, -111 )
 
-[node name="Enemy 6" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 6" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 1068, -143 )
 
-[node name="Enemy 7" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 7" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 1358, -69 )
 
-[node name="Enemy 8" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 8" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 1492, 217 )
 
-[node name="Enemy 9" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 9" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 1492, 444 )
 
-[node name="Enemy 10" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 10" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 1548, 708 )
 
-[node name="Enemy 11" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 11" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 1068, 794 )
 
-[node name="Enemy 12" parent="." instance=ExtResource( 5 )]
+[node name="Enemy 12" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 282, 828 )
-
-[connection signal="timeout" from="Node2D/Timer" to="Node2D" method="_on_Timer_timeout"]
