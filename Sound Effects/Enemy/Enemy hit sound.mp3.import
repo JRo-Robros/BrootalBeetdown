@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Enemy hit sound.mp3-cf6bc83d7ed846c6433d9db37bcda23a.mp3str"
+
+[deps]
+
+source_file="res://Sound Effects/Enemy/Enemy hit sound.mp3"
+dest_files=[ "res://.import/Enemy hit sound.mp3-cf6bc83d7ed846c6433d9db37bcda23a.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
