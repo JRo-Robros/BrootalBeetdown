@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Player lock sound.mp3-b907af038ef0e506de84860b13fdbd53.mp3str"
+
+[deps]
+
+source_file="res://Sound Effects/Player/Player lock sound.mp3"
+dest_files=[ "res://.import/Player lock sound.mp3-b907af038ef0e506de84860b13fdbd53.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

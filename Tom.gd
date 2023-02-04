@@ -9,6 +9,8 @@ export var cooldown:float = 0.15
 export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
 export var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
 export var vine_sound = preload("res://Sound Effects/Player/vine.mp3")
+export var lock_sound = preload("res://Sound Effects/Player/Player lock sound.mp3")
+export var gun_particles = preload("res://VFX/Gun Particles.tscn")
 
 var in_cooldown = false
 var state = STATE.UNROOTED
@@ -76,11 +78,13 @@ func _process(delta):
 		STATE.TOM_IN_MOTION:
 			if position.distance_squared_to(tom_target) <= 50:
 				position = tom_target
+				play_lock_sound()
 				state = STATE.ROOTED
 			else:
 				var collision = move_and_collide((tom_target - position) * delta * tom_speed)
 				vine_text.rect_size.x = abs(position.distance_to(tom_target))
 				if collision:
+					play_lock_sound()
 					state = STATE.ROOTED
 					
 		STATE.ROOTED:
@@ -100,6 +104,7 @@ func shoot(direction):
 	b.position = position
 	get_parent().add_child_below_node(self, b)
 	play_shoot_sound()
+	gun_particles()
 	in_cooldown = true
 	$BulletTimer.start(cooldown)
 	return
@@ -115,6 +120,15 @@ func take_damage(damage):
 	health -= damage
 	play_hurt_sound()
 	Globals.emit_signal("player_health_changed")
+
+
+func gun_particles():
+	var particles = gun_particles.instance()
+	particles.global_position = position + Vector2(90, 0).rotated(get_angle_to((get_global_mouse_position())))
+	particles.rotation = crosshair.rotation
+	particles.z_index = z_index + 1
+	particles.emitting = true
+	get_tree().current_scene.add_child(particles)
 
 
 #sound functions
@@ -140,6 +154,14 @@ func play_vine_sound():
 	var audio = load("res://Oneshot Player2D.tscn").instance()
 	audio.stream = vine_sound
 	audio.pitch_scale = rand_range(0.9,1.1)
+	audio.position = global_position
+	audio.play()
+	get_tree().current_scene.add_child(audio)
+
+func play_lock_sound():
+	var audio = load("res://Oneshot Player2D.tscn").instance()
+	audio.stream = lock_sound
+	audio.pitch_scale = rand_range(0.95,1.05)
 	audio.position = global_position
 	audio.play()
 	get_tree().current_scene.add_child(audio)

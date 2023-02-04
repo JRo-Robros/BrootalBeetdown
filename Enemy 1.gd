@@ -2,9 +2,12 @@ extends KinematicBody2D
 
 enum STATE {SEEKING, IDLE}
 var state = STATE.SEEKING
+var state_list = [STATE.SEEKING, STATE.IDLE]
+onready var state_timer = $"State Timer"
 
-
+export var random_state = true
 export var max_speed = 300
+export var max_speed_random = 60
 export var acceleration = 2000
 export var deceleration = 2000
 export var damage = 5
@@ -13,6 +16,14 @@ export var hurt_sound = preload("res://Sound Effects/Enemy/Enemy hit sound.mp3")
 
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
+
+var rand = RandomNumberGenerator.new()
+
+func _ready():
+	rand.randomize()
+	max_speed += rand.randf_range(-max_speed_random, max_speed_random)
+	
+	set_random_state()
 
 
 func _ready():
@@ -57,3 +68,13 @@ func take_damage(damage):
 	audio.play()
 	get_tree().current_scene.add_child(audio)
 	queue_free()
+
+
+func set_random_state():
+	if random_state:
+		state = state_list[rand.randi_range(0,state_list.size() - 1)]
+
+
+func _on_State_Timer_timeout():
+	set_random_state()
+	state_timer.start(rand.randf_range(0.5,1.5))
