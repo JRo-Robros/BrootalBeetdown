@@ -9,6 +9,8 @@ export var acceleration = 2000
 export var deceleration = 2000
 export var damage = 1
 
+export var hurt_sound = preload("res://Sound Effects/Enemy/Enemy hit sound.mp3")
+
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
 
@@ -45,4 +47,10 @@ func _on_Hurtbox_area_entered(area):
 
 
 func take_damage(damage):
+	var audio = load("res://Oneshot Player2D.tscn").instance()
+	audio.stream = hurt_sound
+	audio.pitch_scale = rand_range(0.9,1.1)
+	audio.position = global_position
+	audio.play()
+	get_tree().current_scene.add_child(audio)
 	queue_free()

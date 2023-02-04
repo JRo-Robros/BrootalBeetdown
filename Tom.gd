@@ -6,6 +6,10 @@ export var tom_speed: int = 6
 export var health: int = 100
 export var cooldown:float = 0.15
 
+export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
+export var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
+export var vine_sound = preload("res://Sound Effects/Player/vine.mp3")
+
 var in_cooldown = false
 var state = STATE.UNROOTED
 var rooted = false
@@ -31,6 +35,7 @@ func _input(event):
 			vine_target = event.position
 			vine_text.rect_size.x = abs(position.distance_to(vine_target)) * 0.8
 			state = STATE.VINE_IN_MOTION
+			play_vine_sound()
 
 
 func _process(delta):
@@ -92,9 +97,11 @@ func shoot(direction):
 	b.direction = direction.normalized()
 	b.position = position
 	get_parent().add_child_below_node(self, b)
+	play_shoot_sound()
 	in_cooldown = true
 	$BulletTimer.start(cooldown)
 	return
+
 
 
 func _on_BulletTimer_timeout():
@@ -104,4 +111,33 @@ func _on_BulletTimer_timeout():
 
 func take_damage(damage):
 	health -= damage
+	play_hurt_sound()
 	Globals.emit_signal("player_health_changed")
+
+
+#sound functions
+func play_shoot_sound():
+	var audio = load("res://Oneshot Player2D.tscn").instance()
+	audio.stream = shoot_sound
+	audio.pitch_scale = rand_range(1.1,1.2)
+	audio.position = global_position
+	audio.play()
+	get_tree().current_scene.add_child(audio)
+
+
+func play_hurt_sound():
+	var audio = load("res://Oneshot Player2D.tscn").instance()
+	audio.stream = hurt_sound
+	audio.pitch_scale = rand_range(0.9,1.1)
+	audio.position = global_position
+	audio.play()
+	get_tree().current_scene.add_child(audio)
+
+
+func play_vine_sound():
+	var audio = load("res://Oneshot Player2D.tscn").instance()
+	audio.stream = vine_sound
+	audio.pitch_scale = rand_range(0.9,1.1)
+	audio.position = global_position
+	audio.play()
+	get_tree().current_scene.add_child(audio)
