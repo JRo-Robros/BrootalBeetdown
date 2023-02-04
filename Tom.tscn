@@ -7,15 +7,18 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 45.0
 
-[node name="Tom" type="RigidBody2D"]
+[node name="Tom" type="KinematicBody2D"]
+collision_mask = 6
 script = ExtResource( 2 )
 
 [node name="Vine" type="Node2D" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="Vine"]
+margin_left = -24.0
 margin_top = -18.0
-margin_right = 58.0
+margin_right = 34.0
 margin_bottom = 7.0
+rect_clip_content = true
 texture = ExtResource( 3 )
 stretch_mode = 2
 
