@@ -49,7 +49,6 @@ monitorable = false
 modulate = Color( 0.835294, 0.521569, 0.4, 0.92549 )
 shape = SubResource( 2 )
 
-
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2( -50, -65 )
 texture = ExtResource( 1 )
@@ -64,13 +63,11 @@ bones = [ "Bone2D2", PoolRealArray( 1, 1, 1, 0.5, 0, 0, 0, 0, 0.5, 1, 1 ), "Bone
 [node name="Bone2D2" type="Bone2D" parent="Polygon2D/Skeleton2D"]
 position = Vector2( 50, 46 )
 rotation = -1.58449
-scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0136969, -0.999906, 0.999906, -0.0136969, 50, 46 )
 
 [node name="Bone2D" type="Bone2D" parent="Polygon2D/Skeleton2D"]
 position = Vector2( 50, 66 )
 rotation = -1.74612
-scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0136969, -0.999906, 0.999906, -0.0136969, 50, 66 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -81,11 +78,9 @@ reset_on_save = false
 anims/RESET = SubResource( 4 )
 anims/default = SubResource( 5 )
 
-
 [node name="State Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
-
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="timeout" from="State Timer" to="." method="_on_State_Timer_timeout"]

@@ -24,9 +24,6 @@ func _ready():
 	max_speed += rand.randf_range(-max_speed_random, max_speed_random)
 	
 	set_random_state()
-
-
-func _ready():
 	$AnimationPlayer.play('default')
 
 func _physics_process(delta):
