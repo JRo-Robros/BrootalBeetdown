@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Block.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Tom.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GraphicalAssets/dirt.png" type="Texture" id=3]
 
 [node name="Main" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 3 )
 
 [node name="Block" parent="." instance=ExtResource( 1 )]
 position = Vector2( 816, 262 )
