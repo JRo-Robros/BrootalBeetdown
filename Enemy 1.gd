@@ -10,7 +10,7 @@ export var max_speed = 300
 export var max_speed_random = 60
 export var acceleration = 2000
 export var deceleration = 2000
-export var damage = 1
+export var damage = 5
 
 export var hurt_sound = preload("res://Sound Effects/Enemy/Enemy hit sound.mp3")
 
@@ -25,6 +25,9 @@ func _ready():
 	
 	set_random_state()
 
+
+func _ready():
+	$AnimationPlayer.play('default')
 
 func _physics_process(delta):
 	set_direction()
