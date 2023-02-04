@@ -101,6 +101,5 @@ func _on_BulletTimer_timeout():
 	return
 
 
-func _on_HitBox_body_entered(body):
-	print(body)
-	return
+func take_damage(damage):
+	print(damage)
