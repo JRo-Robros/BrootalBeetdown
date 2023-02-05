@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "mob",
+"language": "GDScript",
+"path": "res://Enemy 1.gd"
+} ]
+_global_script_class_icons={
+"mob": ""
+}
+
 [application]
 
 config/name="BrootalBeetdown"
