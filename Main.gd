@@ -6,6 +6,8 @@ var waves = 3
 onready var wave_message = $CanvasLayer/CenterContainer/Announcements
 onready var wave_spawner = $YSort/Tom/WaveSpawner
 
+var boss = preload("res://Boss.tscn")
+
 func _ready():
 	wave_spawner.connect('wave_state_changed', self, "on_wave_state_changed")
 
@@ -27,20 +29,27 @@ func on_wave_state_changed():
 			
 		_:
 			wave_message.text = ""
-			print("waves ", waves)
 			if waves > 1:
 				waves -= 1
 				wave_spawner.start_wave(wave_spawner.spawn_amount + 1, wave_spawner.spawn_time * 0.8)
 			else:
+				$YSort/Tom/WaveSpawner.queue_free()
 				wave_message.text = "Time for a BEETDOWN!!"
-				pass
-#				spawn boss fight
+				yield( get_tree().create_timer(3.0), "timeout")
+				var b = boss.instance()
+				b.position = Vector2.ZERO
+				$YSort.add_child(b)
+				b.connect("tree_exited", self, "_on_boss_beat")
+				
 			
 
 
 func _on_Tom_player_died():
 	$Music.stop()
-	print('deds')
 	wave_message.text = "You DIED!!!!"
 	yield(get_tree().create_timer(3.0), "timeout")
 	get_tree().change_scene("res://Title.tscn")
+	
+
+func _on_boss_beat():
+	get_tree().change_scene("res://Win Screen.tscn")

@@ -1,20 +1,21 @@
 extends KinematicBody2D
 
 enum STATE {SEEKING, IDLE, SHOOTING}
-var state = STATE.SHOOTING
+var state = STATE.SEEKING
 
 
 export var max_speed = 500
 export var acceleration = 2000
 export var deceleration = 2000
-export var damage = 5
+export var health = 100
 export var bullet_angle = 0 # degrees
 export var bullet_spread = 30 #degrees
 
 export var hurt_sound = preload("res://Sound Effects/Enemy/Enemy hit sound.mp3")
 export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
-export var bullet = preload("res://Bullet.tscn")
+export var bullet = preload("res://EnemyBullet.tscn")
 
+var aggro = false
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
 
@@ -25,6 +26,7 @@ var rand = RandomNumberGenerator.new()
 
 func _ready():
 	rand.randomize()
+	$AnimationPlayer.play("Default")
 
 
 func _physics_process(delta):
@@ -49,7 +51,7 @@ func match_state():
 		
 		STATE.SHOOTING:
 			direction = Vector2.ZERO
-			$"State Timer".wait_time = 1
+			$"State Timer".wait_time = 2
 			pass
 
 
@@ -66,11 +68,11 @@ func move(delta):
 func flip_sprite():
 	if Globals.player:
 		if Globals.player.position.x > position.x:
-			sprite.flip_h = true
+			$Visual.scale.x = -1
 			bullet_spawner.position.x = -init_spawner_pos.x
 			bullet_angle = 0
 		else:
-			sprite.flip_h = false
+			$Visual.scale.x = 1
 			bullet_spawner.position.x = init_spawner_pos.x
 			bullet_angle = 180
 
@@ -103,6 +105,16 @@ func _on_Fire_Rate_timeout():
 			shoot()
 
 
+func take_damage(damage):
+	health -= damage
+	$ColorRect.margin_right = health * 3
+	if health <= 50:
+		$ColorRect.color = Color.yellow
+	if health <= 30:
+		aggro = true
+	if health <= 0:
+		death()
+
 
 
 func _on_State_Timer_timeout():
@@ -116,3 +128,5 @@ func _on_State_Timer_timeout():
 		STATE.SHOOTING:
 			state = STATE.IDLE
 		
+func death():
+	queue_free()
