@@ -4,7 +4,9 @@ enum STATE {UNROOTED, VINE_IN_MOTION, TOM_IN_MOTION, ROOTED}
 export var vine_speed: float = 0.8
 export var tom_speed: int = 6
 export var health: int = 100
-export var cooldown:float = 0.15
+export var base_cooldown:float = 0.15
+
+var cooldown:float = base_cooldown
 
 export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
 export var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
@@ -20,6 +22,9 @@ var tom_in_motion = false
 var vine_target: Vector2 = Vector2.INF
 var tom_target: Vector2 = position
 var bullet = preload("res://Bullet.tscn")
+var hurt_tex = preload("res://GraphicalAssets/hurt1.png")
+var def_tex = preload("res://GraphicalAssets/angry.png")
+var shock_tex = preload("res://GraphicalAssets/shock.png")
 
 onready var vine = $Vine
 onready var vine_text = $Vine/TextureRect
@@ -42,6 +47,9 @@ func _input(event):
 
 
 func _process(delta):
+	if cooldown >= 0.35:
+		$Visual/Polygon2D.texture = shock_tex
+		
 	var mouse_loc = get_global_mouse_position()
 	crosshair.look_at(mouse_loc)
 	$Visual.scale.x = -1 if mouse_loc.x < position.x else 1
@@ -74,6 +82,8 @@ func _process(delta):
 				vine_text.rect_size.x = 10
 				vine_target = Vector2.INF
 				state = STATE.TOM_IN_MOTION
+				cooldown = base_cooldown
+				$Visual/Polygon2D.texture = def_tex
 				
 		STATE.TOM_IN_MOTION:
 			if position.distance_squared_to(tom_target) <= 50:
@@ -100,6 +110,7 @@ func _process(delta):
 func shoot(direction):
 	if in_cooldown:
 		return
+	cooldown *= 1.09
 	var b = bullet.instance()
 	b.direction = direction.normalized()
 	b.position = position
@@ -121,7 +132,7 @@ func take_damage(damage):
 	health -= damage
 	play_hurt_sound()
 	Globals.emit_signal("player_health_changed")
-
+	$Visual/Polygon2D.texture = hurt_tex
 
 func gun_particles():
 	var particles = gun_particles.instance()

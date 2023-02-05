@@ -1,3 +1,4 @@
+class_name mob
 extends KinematicBody2D
 
 enum STATE {SEEKING, IDLE}

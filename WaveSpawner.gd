@@ -1,15 +1,14 @@
 extends Node2D
 
-signal wave_started
-signal wave_finished
+signal wave_state_changed
 
 enum STATE {GET_READY, ACTIVE, COUNTDOWN, COOLDOWN}
 
-export var spawn_amount = 4
-export var spawn_time = 2.0
-export var wave_time = 20
+export var spawn_amount = 2
+export var spawn_time = 4.0
+export var wave_time = 17.0
 
-var state = STATE.GET_READY
+var state = null
 var enemy = preload("res://Enemy 1.tscn")
 var rand = RandomNumberGenerator.new()
 onready var wave_timer = $Timer
@@ -21,36 +20,34 @@ func _ready():
 	start_wave()
 
 
-func start_wave(_sp_amt = 4, _sp_time = 2.0, _wv_time = 20):
+func start_wave(_sp_amt = 2, _sp_time = 4.0, _wv_time = 17.0):
 	spawn_amount = _sp_amt
 	spawn_time = _sp_time
 	wave_time = _wv_time
 	state = STATE.GET_READY
+	emit_signal('wave_state_changed')
 	wave_timer.start(3)
-	emit_signal("wave_started")
 	
 func _on_Timer_timeout():
+	var new_state = null
 	match state:
 		STATE.GET_READY:
-			print('to active')
-			state = STATE.ACTIVE
+			new_state = STATE.ACTIVE
 			_on_SpawnTimer_timeout()
 			wave_timer.start(wave_time)
 		STATE.ACTIVE:
-			print('to countdown')
-			state = STATE.COUNTDOWN
-			wave_timer.start(10)
-		STATE.COUNTDOWN:
-			print('to_cooldown')
-			state = STATE.COOLDOWN
+			new_state = STATE.COUNTDOWN
 			wave_timer.start(5)
-			emit_signal('wave_finished')
-		STATE.COOLDOWN:
-			pass
+		STATE.COUNTDOWN:
+			new_state = STATE.COOLDOWN
+			wave_timer.start(7)
+	state = new_state
+	emit_signal('wave_state_changed')
 
 
 func _on_SpawnTimer_timeout():
-	if state == STATE.COOLDOWN:
+	$SpawnTimer.start(spawn_time)
+	if state == STATE.COOLDOWN or state == STATE.GET_READY or state == null:
 		return
 	var enemies_node = get_parent().get_node('YSort')
 	for i in spawn_amount:
@@ -70,6 +67,3 @@ func _on_SpawnTimer_timeout():
 				e.position.y = 0
 		e.position.x -= rect_size.x / 2
 		enemies_node.add_child(e)
-	if state == STATE.ACTIVE or state == STATE.COUNTDOWN:
-		$SpawnTimer.start(spawn_time)
-		
