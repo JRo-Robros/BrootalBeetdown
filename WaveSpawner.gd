@@ -1,6 +1,8 @@
 extends Node2D
 
+signal wave_started
 signal wave_finished
+
 enum STATE {GET_READY, ACTIVE, COUNTDOWN, COOLDOWN}
 
 export var spawn_amount = 4
@@ -25,6 +27,7 @@ func start_wave(_sp_amt = 4, _sp_time = 2.0, _wv_time = 20):
 	wave_time = _wv_time
 	state = STATE.GET_READY
 	wave_timer.start(3)
+	emit_signal("wave_started")
 	
 func _on_Timer_timeout():
 	match state:
@@ -41,8 +44,9 @@ func _on_Timer_timeout():
 			print('to_cooldown')
 			state = STATE.COOLDOWN
 			wave_timer.start(5)
-		STATE.COOLDOWN:
 			emit_signal('wave_finished')
+		STATE.COOLDOWN:
+			pass
 
 
 func _on_SpawnTimer_timeout():
