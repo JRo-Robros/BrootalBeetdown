@@ -70,7 +70,6 @@ expand = true
 position = Vector2( 2, 541 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Tom"]
-current = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 drag_margin_left = 0.4
