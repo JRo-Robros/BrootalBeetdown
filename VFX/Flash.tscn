@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://VFX/flash.png" type="Texture" id=1]
+[ext_resource path="res://VFX/Flash.gd" type="Script" id=2]
+
+[node name="Flash" type="Light2D"]
+texture = ExtResource( 1 )
+texture_scale = 5.0
+script = ExtResource( 2 )
