@@ -186,13 +186,11 @@ position = Vector2( -50, -41 )
 [node name="Bone2D2" type="Bone2D" parent="Polygon2D/Skeleton2D"]
 position = Vector2( 50, 46 )
 rotation = -1.58449
-scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0136969, -0.999906, 0.999906, -0.0136969, 50, 46 )
 
 [node name="Bone2D" type="Bone2D" parent="Polygon2D/Skeleton2D"]
 position = Vector2( 50, 66 )
 rotation = -1.71865
-scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0136969, -0.999906, 0.999906, -0.0136969, 50, 66 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
