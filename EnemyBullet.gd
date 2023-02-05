@@ -7,6 +7,7 @@ var direction:Vector2 = Vector2.ZERO
 
 
 func _process(delta):
+	$Sprite.rotation_degrees += 1
 	var collision = move_and_collide(direction * speed)
 	if collision:
 		if collision.collider.has_method('take_damage'):

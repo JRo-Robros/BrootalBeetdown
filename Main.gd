@@ -36,6 +36,7 @@ func on_wave_state_changed():
 				$YSort/Tom/WaveSpawner.queue_free()
 				wave_message.text = "Time for a BEETDOWN!!"
 				yield( get_tree().create_timer(3.0), "timeout")
+				wave_message.text = ""
 				var b = boss.instance()
 				b.position = Vector2.ZERO
 				$YSort.add_child(b)
