@@ -136,6 +136,7 @@ func _on_BulletTimer_timeout():
 
 
 func take_damage(damage):
+	Globals.cam.start_shake()
 	health -= damage
 	play_hurt_sound()
 	if health <= 0:
