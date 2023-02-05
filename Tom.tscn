@@ -287,7 +287,6 @@ bones = [ "Bone2D", PoolRealArray( 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 ), "Bone2D2",
 
 [node name="Bone2D" type="Bone2D" parent="Visual/Polygon2D/Skeleton2D"]
 position = Vector2( 55, 52 )
-scale = Vector2( 1, 1 )
 rest = Transform2D( 0.996912, -0.0785329, 0.0785329, 0.996912, 55, 52 )
 default_length = 50.0
 
