@@ -139,6 +139,7 @@ func take_damage(damage):
 	Globals.cam.start_shake()
 	health -= damage
 	play_hurt_sound()
+	flash()
 	if health <= 0:
 		player_death()
 	Globals.emit_signal("player_health_changed")
@@ -203,6 +204,12 @@ func player_death():
 	dead = true
 	play_death_sound()
 	$AnimationPlayer.play("Death")
+
+
+func flash():
+	modulate = Color(3,3,3,1)
+	yield(get_tree().create_timer(0.1, false), "timeout")
+	modulate = Color(1,1,1,1)
 
 
 func inform_player_dead():
