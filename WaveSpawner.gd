@@ -4,15 +4,15 @@ signal wave_state_changed
 
 enum STATE {GET_READY, ACTIVE, COUNTDOWN, COOLDOWN}
 
-export var spawn_amount = 2
-export var spawn_time = 4.0
-export var wave_time = 17.0
+export var spawn_amount = 4
+export var spawn_time = 1.2
+export var wave_time = 15.0
 
 var state = null
 var enemy = preload("res://Enemy 1.tscn")
 var rand = RandomNumberGenerator.new()
 onready var wave_timer = $Timer
-onready var rect_size = get_viewport_rect().size
+onready var rect_size = get_viewport_rect().size * 1.2
 
 
 func _ready():
@@ -20,7 +20,7 @@ func _ready():
 	start_wave()
 
 
-func start_wave(_sp_amt = 2, _sp_time = 4.0, _wv_time = 17.0):
+func start_wave(_sp_amt = 4, _sp_time = 1.2, _wv_time = 15.0):
 	spawn_amount = _sp_amt
 	spawn_time = _sp_time
 	wave_time = _wv_time
@@ -49,7 +49,7 @@ func _on_SpawnTimer_timeout():
 	$SpawnTimer.start(spawn_time)
 	if state == STATE.COOLDOWN or state == STATE.GET_READY or state == null:
 		return
-	var enemies_node = get_parent().get_node('YSort')
+	var enemies_node = get_parent().get_parent()
 	for i in spawn_amount:
 		var e = enemy.instance()
 		var n = rand.randf()

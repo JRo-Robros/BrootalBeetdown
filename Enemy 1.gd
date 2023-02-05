@@ -23,7 +23,12 @@ var rand = RandomNumberGenerator.new()
 func _ready():
 	rand.randomize()
 	max_speed += rand.randf_range(-max_speed_random, max_speed_random)
-	
+	if rand.randi_range(0,100) > 95:
+		random_state = false
+		max_speed = 700
+	else:
+		$Fire.emitting = false
+		$Polygon2D.modulate = Color.white
 	set_random_state()
 	$AnimationPlayer.play('default')
 

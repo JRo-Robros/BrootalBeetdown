@@ -4,14 +4,15 @@ enum STATE {GET_READY, ACTIVE, COUNTDOWN, COOLDOWN}
 
 var waves = 3
 onready var wave_message = $CanvasLayer/CenterContainer/Announcements
+onready var wave_spawner = $YSort/Tom/WaveSpawner
 
 func _ready():
-	$WaveSpawner.connect('wave_state_changed', self, "on_wave_state_changed")
+	wave_spawner.connect('wave_state_changed', self, "on_wave_state_changed")
 
 
 func on_wave_state_changed():
-	print($WaveSpawner.state)
-	match $WaveSpawner.state:
+	print(wave_spawner.state)
+	match wave_spawner.state:
 		0:
 			wave_message.text = "Get Ready for the next wave !!"
 
@@ -29,7 +30,7 @@ func on_wave_state_changed():
 			print("waves ", waves)
 			if waves > 1:
 				waves -= 1
-				$WaveSpawner.start_wave($WaveSpawner.spawn_amount + 1, $WaveSpawner.spawn_time * 0.8)
+				wave_spawner.start_wave(wave_spawner.spawn_amount + 1, wave_spawner.spawn_time * 0.8)
 			else:
 				wave_message.text = "Time for a BEETDOWN!!"
 				pass

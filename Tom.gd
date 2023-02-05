@@ -4,7 +4,7 @@ enum STATE {UNROOTED, VINE_IN_MOTION, TOM_IN_MOTION, ROOTED}
 export var vine_speed: float = 0.8
 export var tom_speed: int = 6
 export var health: int = 100
-export var base_cooldown:float = 0.15
+export var base_cooldown:float = 0.04
 
 var cooldown:float = base_cooldown
 
