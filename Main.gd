@@ -39,7 +39,8 @@ func on_wave_state_changed():
 
 
 func _on_Tom_player_died():
+	$Music.stop()
 	print('deds')
 	wave_message.text = "You DIED!!!!"
 	yield(get_tree().create_timer(3.0), "timeout")
-	get_tree().change_scene("res://Main.tscn")
+	get_tree().change_scene("res://Title.tscn")

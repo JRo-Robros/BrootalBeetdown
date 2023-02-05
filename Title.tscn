@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Title.gd" type="Script" id=1]
 [ext_resource path="res://Music/Title/Title Music.mp3" type="AudioStream" id=2]
+[ext_resource path="res://Theme/Main Theme.tres" type="Theme" id=3]
+[ext_resource path="res://GraphicalAssets/BBDlogo_2.png" type="Texture" id=4]
+[ext_resource path="res://Elements.gd" type="Script" id=5]
+[ext_resource path="res://GraphicalAssets/vine.png" type="Texture" id=6]
+[ext_resource path="res://Logo.gd" type="Script" id=7]
+[ext_resource path="res://TitleVbox.gd" type="Script" id=8]
 
 [node name="Title" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,20 +17,56 @@ stream = ExtResource( 2 )
 volume_db = -8.0
 autoplay = true
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -5324.0
+margin_top = -2961.0
+margin_right = 3992.0
+margin_bottom = 3563.0
+color = Color( 0.466667, 0.215686, 0.0941176, 1 )
+
+[node name="Elements" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchor_right = 1.0
-margin_right = 1280.0
-margin_bottom = 720.0
+anchor_bottom = 1.0
+margin_top = 235.0
+margin_bottom = 231.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 619.0
-margin_top = 350.0
-margin_right = 660.0
-margin_bottom = 370.0
+[node name="TitleVbox" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
+margin_left = 427.0
+margin_top = 221.0
+margin_right = 853.0
+margin_bottom = 495.0
+script = ExtResource( 8 )
 
-[node name="Start" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_right = 41.0
-margin_bottom = 20.0
+[node name="Start" type="Button" parent="CanvasLayer/CenterContainer/TitleVbox"]
+margin_right = 426.0
+margin_bottom = 135.0
+theme = ExtResource( 3 )
 text = "Start"
 
-[connection signal="button_up" from="CenterContainer/VBoxContainer/Start" to="." method="_on_Start_button_up"]
+[node name="Quit" type="Button" parent="CanvasLayer/CenterContainer/TitleVbox"]
+margin_top = 139.0
+margin_right = 426.0
+margin_bottom = 274.0
+theme = ExtResource( 3 )
+text = "Quit"
+
+[node name="Logo" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 1280, 333 )
+scale = Vector2( 2.2, 2.2 )
+texture = ExtResource( 4 )
+script = ExtResource( 7 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_top = 1368.0
+margin_right = 3161.0
+margin_bottom = 1400.0
+texture = ExtResource( 6 )
+stretch_mode = 2
+
+[connection signal="button_up" from="CanvasLayer/CenterContainer/TitleVbox/Start" to="." method="_on_Start_button_up"]
+[connection signal="button_up" from="CanvasLayer/CenterContainer/TitleVbox/Quit" to="." method="_on_Quit_button_up"]
