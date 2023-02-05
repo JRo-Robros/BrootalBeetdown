@@ -35,7 +35,7 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed:
-			vine_target = event.position
+			vine_target = get_global_mouse_position()
 			vine_text.rect_size.x = abs(position.distance_to(vine_target)) * 0.8
 			state = STATE.VINE_IN_MOTION
 			play_vine_sound()
@@ -85,6 +85,7 @@ func _process(delta):
 				vine_text.rect_size.x = abs(position.distance_to(tom_target))
 				if collision:
 					play_lock_sound()
+					vine_text.rect_size.x = 10
 					state = STATE.ROOTED
 					
 		STATE.ROOTED:

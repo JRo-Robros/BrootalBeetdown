@@ -30,6 +30,7 @@ window/stretch/shrink=0.5
 
 window=false
 render=false
+theme=false
 
 [gui]
 

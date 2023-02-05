@@ -1,12 +1,26 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
+[ext_resource path="res://WaveSpawner.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Tom.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GraphicalAssets/dirt.png" type="Texture" id=3]
-[ext_resource path="res://Enemy 1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Main.gd" type="Script" id=4]
 [ext_resource path="res://PlayerHealth.gd" type="Script" id=6]
 [ext_resource path="res://Music/Level/Level Theme.mp3" type="AudioStream" id=7]
 
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 960, 10 )
+
+[sub_resource type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = SubResource( 2 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+
 [node name="Main" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
@@ -14,11 +28,11 @@ volume_db = -5.0
 autoplay = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color( 0.901961, 0.690196, 0.690196, 1 )
-self_modulate = Color( 0.509804, 0.47451, 0.47451, 0.686275 )
+self_modulate = Color( 1, 1, 1, 0.588235 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 1920.0
+margin_left = -960.0
+margin_right = 960.0
 margin_bottom = 1080.0
 texture = ExtResource( 3 )
 expand = true
@@ -26,7 +40,7 @@ expand = true
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Tom" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 840, 447 )
+position = Vector2( 2, 541 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Tom"]
 current = true
@@ -35,48 +49,58 @@ drag_margin_v_enabled = true
 drag_margin_left = 0.4
 drag_margin_top = 0.4
 
-[node name="Enemy 1" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( -136, 595 )
+[node name="WaveSpawner" parent="." instance=ExtResource( 1 )]
+position = Vector2( -960, 0 )
 
-[node name="Enemy 2" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( -298, 367 )
+[node name="Fence" type="StaticBody2D" parent="."]
 
-[node name="Enemy 3" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( -282, 53 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fence"]
+shape = SubResource( 1 )
 
-[node name="Enemy 4" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 170, -193 )
+[node name="Fence2" type="StaticBody2D" parent="."]
+position = Vector2( 0, 1080 )
 
-[node name="Enemy 5" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 772, -111 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fence2"]
+shape = SubResource( 1 )
 
-[node name="Enemy 6" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 1068, -143 )
+[node name="Fence3" type="StaticBody2D" parent="."]
+position = Vector2( -960, 540 )
+rotation = 1.5708
 
-[node name="Enemy 7" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 1358, -69 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fence3"]
+shape = SubResource( 1 )
 
-[node name="Enemy 8" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 1492, 217 )
+[node name="Fence4" type="StaticBody2D" parent="."]
+position = Vector2( 960, 540 )
+rotation = 1.5708
 
-[node name="Enemy 9" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 1492, 444 )
-
-[node name="Enemy 10" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 1548, 708 )
-
-[node name="Enemy 11" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 1068, 794 )
-
-[node name="Enemy 12" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 282, 828 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fence4"]
+shape = SubResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PlayerHealth" type="ColorRect" parent="CanvasLayer"]
 modulate = Color( 0.0392157, 0.819608, 0.360784, 1 )
-margin_left = 18.0
-margin_top = 14.0
-margin_right = 200.0
-margin_bottom = 28.0
+margin_left = 59.0
+margin_top = 64.0
+margin_right = 259.0
+margin_bottom = 78.0
+grow_horizontal = 2
 script = ExtResource( 6 )
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -58.5
+margin_right = 58.5
+margin_bottom = 720.0
+theme = SubResource( 4 )
+
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer"]
+margin_left = 50.0
+margin_top = 359.0
+margin_right = 67.0
+margin_bottom = 361.0
+size_flags_horizontal = 4
+size_flags_vertical = 12
+text = "WAVE STARTS IN..."
