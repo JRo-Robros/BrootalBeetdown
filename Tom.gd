@@ -8,12 +8,14 @@ export var tom_speed: int = 6
 export var health: int = 100
 export var base_cooldown:float = 0.04
 
-export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
-export var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
-export var death_sound = preload("res://Sound Effects/Player/Player death sound.mp3")
-export var vine_sound = preload("res://Sound Effects/Player/vine.mp3")
-export var lock_sound = preload("res://Sound Effects/Player/Player lock sound.mp3")
-export var gun_particles = preload("res://VFX/Gun Particles.tscn")
+var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
+var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
+var death_sound = preload("res://Sound Effects/Player/Player death sound.mp3")
+var vine_sound = preload("res://Sound Effects/Player/vine.mp3")
+var lock_sound = preload("res://Sound Effects/Player/Player lock sound.mp3")
+var gun_particles = preload("res://VFX/Gun Particles.tscn")
+var gun_flash = preload("res://VFX/Flash.tscn")
+
 
 var dead = false
 var cooldown:float = base_cooldown
@@ -119,11 +121,12 @@ func shoot(direction):
 		return
 	cooldown *= 1.09
 	var b = bullet.instance()
-	b.direction = direction.normalized()
+	b.direction = direction.normalized().rotated(deg2rad(rand_range(-4,4)))
 	b.position = position
 	get_parent().add_child_below_node(self, b)
 	play_shoot_sound()
 	gun_particles()
+	gun_flash()
 	in_cooldown = true
 	$BulletTimer.start(cooldown)
 	return
@@ -147,11 +150,18 @@ func take_damage(damage):
 
 func gun_particles():
 	var particles = gun_particles.instance()
-	particles.global_position = position + Vector2(90, 0).rotated(get_angle_to((get_global_mouse_position())))
+	particles.global_position = position + Vector2(100, 0).rotated(get_angle_to((get_global_mouse_position())))
 	particles.rotation = crosshair.rotation
 	particles.z_index = z_index + 1
 	particles.emitting = true
 	get_tree().current_scene.add_child(particles)
+
+
+func gun_flash():
+	var flash = gun_flash.instance()
+	flash.global_position = position + Vector2(100, 0).rotated(get_angle_to((get_global_mouse_position())))
+	flash.z_index = z_index + 1
+	get_tree().current_scene.add_child(flash)
 
 
 #sound functions
