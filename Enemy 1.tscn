@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://GraphicalAssets/aggro.png" type="Texture" id=1]
 [ext_resource path="res://Enemy 1.gd" type="Script" id=2]
@@ -22,6 +22,59 @@ radius = 28.0
 [sub_resource type="CircleShape2D" id=3]
 radius = 39.0512
 
+[sub_resource type="Animation" id=9]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
+}
+
 [sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "bezier"
@@ -33,6 +86,42 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -83,7 +172,7 @@ shape = SubResource( 2 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 modulate = Color( 1, 0.133333, 0.701961, 1 )
-position = Vector2( -50, -65 )
+offset = Vector2( -50, -65 )
 texture = ExtResource( 1 )
 skeleton = NodePath("Skeleton2D")
 polygon = PoolVector2Array( 48.2759, -10.9718, 30.721, 13.1661, 30.094, 29.1536, 7.83699, 49.2163, 8.77742, 89.0282, 35.4232, 104.389, 60.5016, 106.27, 90.9091, 91.2226, 92.163, 43.5737, 66.7711, 27.5862, 65.8307, 7.52351 )
@@ -92,15 +181,18 @@ polygons = [ PoolIntArray( 2, 9, 10, 0, 1 ), PoolIntArray( 3, 2, 9, 8 ), PoolInt
 bones = [ "Bone2D2", PoolRealArray( 1, 1, 1, 0.5, 0, 0, 0, 0, 0.5, 1, 1 ), "Bone2D", PoolRealArray( 0, 0, 0.5, 1, 0.5, 0, 0, 0.5, 1, 0.5, 0 ) ]
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Polygon2D"]
+position = Vector2( -50, -41 )
 
 [node name="Bone2D2" type="Bone2D" parent="Polygon2D/Skeleton2D"]
 position = Vector2( 50, 46 )
 rotation = -1.58449
+scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0136969, -0.999906, 0.999906, -0.0136969, 50, 46 )
 
 [node name="Bone2D" type="Bone2D" parent="Polygon2D/Skeleton2D"]
 position = Vector2( 50, 66 )
-rotation = -1.74612
+rotation = -1.71865
+scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0136969, -0.999906, 0.999906, -0.0136969, 50, 66 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -108,6 +200,7 @@ shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false
+anims/Death = SubResource( 9 )
 anims/RESET = SubResource( 4 )
 anims/default = SubResource( 5 )
 

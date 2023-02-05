@@ -70,7 +70,9 @@ func take_damage(damage):
 	audio.position = global_position
 	audio.play()
 	get_tree().current_scene.add_child(audio)
-	queue_free()
+	$CollisionShape2D.disabled = true
+	$Hurtbox/CollisionShape2D.disabled = true
+	$AnimationPlayer.play("Death")
 
 
 func set_random_state():

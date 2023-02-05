@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://GraphicalAssets/idle.png" type="Texture" id=1]
 [ext_resource path="res://Tom.gd" type="Script" id=2]
 [ext_resource path="res://GraphicalAssets/vine.png" type="Texture" id=3]
 [ext_resource path="res://GraphicalAssets/crosshair.png" type="Texture" id=4]
+[ext_resource path="res://GraphicalAssets/hurt2.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 45.0
@@ -11,6 +12,108 @@ radius = 45.0
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 32.0
 height = 10.0
+
+[sub_resource type="Animation" id=5]
+resource_name = "Death"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Crosshair:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visual/Polygon2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 1 ), ExtResource( 5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1.6, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 55, 52 ), Vector2( 68.3752, 39.9541 ), Vector2( 39.6966, 41.0537 ), Vector2( 77.0445, 60.0708 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -4.50424, -23.9966, 14.3775 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D2:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1.6, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 39, 57 ), Vector2( -0.06287, 78.8882 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D2:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1.6, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 179.918, 179.918, 183.023 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Visual/Polygon2D:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1.5, 2.7, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.458824, 0.94902, 0.321569, 1 ), Color( 0.109804, 0.45098, 0.431373, 1 ), Color( 0.0392157, 0.0588235, 0.0588235, 0 ) ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 3.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "inform_player_dead"
+} ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "Default"
@@ -37,6 +140,90 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Crosshair:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visual/Polygon2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 55, 52 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D2:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 39, 57 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Visual/Polygon2D/Skeleton2D/Bone2D2:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 179.918 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Visual/Polygon2D:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Visual/Polygon2D:self_modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="Tom" type="KinematicBody2D"]
@@ -80,6 +267,7 @@ shape = SubResource( 2 )
 [node name="BulletTimer" type="Timer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Death = SubResource( 5 )
 anims/Default = SubResource( 3 )
 anims/RESET = SubResource( 4 )
 
@@ -99,6 +287,7 @@ bones = [ "Bone2D", PoolRealArray( 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 ), "Bone2D2",
 
 [node name="Bone2D" type="Bone2D" parent="Visual/Polygon2D/Skeleton2D"]
 position = Vector2( 55, 52 )
+scale = Vector2( 1, 1 )
 rest = Transform2D( 0.996912, -0.0785329, 0.0785329, 0.996912, 55, 52 )
 default_length = 50.0
 

@@ -36,3 +36,10 @@ func on_wave_state_changed():
 				pass
 #				spawn boss fight
 			
+
+
+func _on_Tom_player_died():
+	print('deds')
+	wave_message.text = "You DIED!!!!"
+	yield(get_tree().create_timer(3.0), "timeout")
+	get_tree().change_scene("res://Main.tscn")

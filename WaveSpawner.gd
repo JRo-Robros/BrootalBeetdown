@@ -4,9 +4,9 @@ signal wave_state_changed
 
 enum STATE {GET_READY, ACTIVE, COUNTDOWN, COOLDOWN}
 
-export var spawn_amount = 4
-export var spawn_time = 1.2
-export var wave_time = 15.0
+export var spawn_amount = 3
+export var spawn_time = 1.3
+export var wave_time = 10
 
 var state = null
 var enemy = preload("res://Enemy 1.tscn")
@@ -20,7 +20,7 @@ func _ready():
 	start_wave()
 
 
-func start_wave(_sp_amt = 4, _sp_time = 1.2, _wv_time = 15.0):
+func start_wave(_sp_amt = spawn_amount, _sp_time = spawn_time, _wv_time = wave_time):
 	spawn_amount = _sp_amt
 	spawn_time = _sp_time
 	wave_time = _wv_time

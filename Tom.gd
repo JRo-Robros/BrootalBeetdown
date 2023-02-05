@@ -1,12 +1,12 @@
 extends KinematicBody2D
 enum STATE {UNROOTED, VINE_IN_MOTION, TOM_IN_MOTION, ROOTED}
 
+signal player_died
+
 export var vine_speed: float = 0.8
 export var tom_speed: int = 6
 export var health: int = 100
 export var base_cooldown:float = 0.04
-
-var cooldown:float = base_cooldown
 
 export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
 export var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
@@ -14,6 +14,8 @@ export var vine_sound = preload("res://Sound Effects/Player/vine.mp3")
 export var lock_sound = preload("res://Sound Effects/Player/Player lock sound.mp3")
 export var gun_particles = preload("res://VFX/Gun Particles.tscn")
 
+var dead = false
+var cooldown:float = base_cooldown
 var in_cooldown = false
 var state = STATE.UNROOTED
 var rooted = false
@@ -38,6 +40,8 @@ func _ready():
 
 
 func _input(event):
+	if dead:
+		return
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed:
 			vine_target = get_global_mouse_position()
@@ -47,6 +51,8 @@ func _input(event):
 
 
 func _process(delta):
+	if dead:
+		return
 	if cooldown >= 0.35:
 		$Visual/Polygon2D.texture = shock_tex
 		
@@ -131,6 +137,8 @@ func _on_BulletTimer_timeout():
 func take_damage(damage):
 	health -= damage
 	play_hurt_sound()
+	if health <= 0:
+		player_death()
 	Globals.emit_signal("player_health_changed")
 	$Visual/Polygon2D.texture = hurt_tex
 
@@ -170,6 +178,7 @@ func play_vine_sound():
 	audio.play()
 	get_tree().current_scene.add_child(audio)
 
+
 func play_lock_sound():
 	var audio = load("res://Oneshot Player2D.tscn").instance()
 	audio.stream = lock_sound
@@ -177,3 +186,12 @@ func play_lock_sound():
 	audio.position = global_position
 	audio.play()
 	get_tree().current_scene.add_child(audio)
+
+
+func player_death():
+	dead = true
+	$AnimationPlayer.play("Death")
+
+
+func inform_player_dead():
+	emit_signal("player_died")
