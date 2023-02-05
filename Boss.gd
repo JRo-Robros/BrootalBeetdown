@@ -120,6 +120,7 @@ func take_damage(damage):
 func _on_State_Timer_timeout():
 	match state:
 		STATE.IDLE:
+			$AnimationPlayer.stop()
 			state = STATE.SEEKING
 		
 		STATE.SEEKING:
@@ -129,4 +130,4 @@ func _on_State_Timer_timeout():
 			state = STATE.IDLE
 		
 func death():
-	queue_free()
+	$AnimationPlayer.play("Death")
