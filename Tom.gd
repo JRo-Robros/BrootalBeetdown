@@ -10,6 +10,7 @@ export var base_cooldown:float = 0.04
 
 export var shoot_sound = preload("res://Sound Effects/Player/Player shoot sound.mp3")
 export var hurt_sound = preload("res://Sound Effects/Player/Player hit sound.mp3")
+export var death_sound = preload("res://Sound Effects/Player/Player death sound.mp3")
 export var vine_sound = preload("res://Sound Effects/Player/vine.mp3")
 export var lock_sound = preload("res://Sound Effects/Player/Player lock sound.mp3")
 export var gun_particles = preload("res://VFX/Gun Particles.tscn")
@@ -188,8 +189,18 @@ func play_lock_sound():
 	get_tree().current_scene.add_child(audio)
 
 
+func play_death_sound():
+	var audio = load("res://Oneshot Player2D.tscn").instance()
+	audio.stream = death_sound
+	audio.pitch_scale = 1
+	audio.position = global_position
+	audio.play()
+	get_tree().current_scene.add_child(audio)
+
+
 func player_death():
 	dead = true
+	play_death_sound()
 	$AnimationPlayer.play("Death")
 
 

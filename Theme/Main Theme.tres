@@ -1,26 +1,45 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=7 format=2]
 
 [ext_resource path="res://Theme/Kaph-Regular.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="DynamicFont" id=2]
+size = 100
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.388235, 0.0862745, 0.192157, 1 )
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.878431, 0.415686, 0.290196, 1 )
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
 border_width_bottom = 10
-border_color = Color( 0.364706, 0.0705882, 0.145098, 1 )
+border_color = Color( 0.772549, 0.172549, 0.172549, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.803922, 0.247059, 0.196078, 1 )
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color( 0.772549, 0.172549, 0.172549, 1 )
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.827451, 0.313726, 0.231373, 1 )
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color( 0.772549, 0.172549, 0.172549, 1 )
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
 
 [resource]
 Button/fonts/font = SubResource( 2 )
+Button/styles/hover = SubResource( 4 )
 Button/styles/normal = SubResource( 3 )
+Button/styles/pressed = SubResource( 5 )
 Label/fonts/font = SubResource( 1 )
