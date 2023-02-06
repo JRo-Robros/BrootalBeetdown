@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-enum STATE {SEEKING, IDLE, SHOOTING}
+enum STATE {SEEKING, IDLE, SHOOTING, DEAD}
 var state = STATE.SEEKING
 
 
@@ -18,6 +18,7 @@ export var bullet = preload("res://EnemyBullet.tscn")
 var aggro = false
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
+var dead = false
 
 onready var bullet_spawner = $"Bullet Spawner"
 onready var sprite = $Sprite
@@ -79,6 +80,7 @@ func flip_sprite():
 
 func shoot():
 	var inst = bullet.instance()
+	inst.damage = 7
 	inst.position = bullet_spawner.global_position
 	if Globals.player:
 		inst.rotation = get_angle_to(Globals.player.position) + deg2rad(rand.randf_range(-bullet_spread, bullet_spread))
@@ -107,9 +109,9 @@ func _on_Fire_Rate_timeout():
 
 func take_damage(damage):
 	health -= damage
-	$ColorRect.margin_right = health * 3
+	$Control/ColorRect.margin_right = health * 4 - 400
 	if health <= 50:
-		$ColorRect.color = Color.yellow
+		$Control/ColorRect.color = Color.yellow
 	if health <= 30:
 		aggro = true
 	if health <= 0:
@@ -130,4 +132,5 @@ func _on_State_Timer_timeout():
 			state = STATE.IDLE
 		
 func death():
+	state = STATE.DEAD
 	$AnimationPlayer.play("Death")

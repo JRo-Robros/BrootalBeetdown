@@ -8,7 +8,7 @@ func _ready():
 
 func update_health():
 	if Globals.player:
-		margin_right = Globals.player.health * 2
+		margin_right = Globals.player.health * 4 - 400
 		if Globals.player.health < 20:
 			modulate = Color.orangered
 			return

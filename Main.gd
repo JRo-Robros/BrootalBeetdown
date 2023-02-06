@@ -13,7 +13,6 @@ func _ready():
 
 
 func on_wave_state_changed():
-	print(wave_spawner.state)
 	match wave_spawner.state:
 		0:
 			wave_message.text = "Get Ready for the next wave !!"

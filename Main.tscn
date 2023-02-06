@@ -388,12 +388,16 @@ shape = SubResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PlayerHealth" type="ColorRect" parent="CanvasLayer"]
+[node name="Control" type="Control" parent="CanvasLayer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 420.0
+margin_bottom = 60.0
+
+[node name="PlayerHealth" type="ColorRect" parent="CanvasLayer/Control"]
 modulate = Color( 0.0392157, 0.819608, 0.360784, 1 )
-margin_left = 59.0
-margin_top = 64.0
-margin_right = 259.0
-margin_bottom = 78.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 script = ExtResource( 6 )
 
